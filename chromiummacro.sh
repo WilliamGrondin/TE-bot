@@ -45,11 +45,10 @@ do
 cp -r $BASEDIR/default-user $BASEDIR/user$i
 
 echo "User$i country : ${usersCountry[$((i-1))]}"
-sqlite3 $BASEDIR/user$i/Default/Local\ Storage/chrome-extension_gkojfkhlekighikafcpjkiklfbnlmeio_0.localstorage "UPDATE ItemTable SET value=replace(v$
+sqlite3 $BASEDIR/user$i/Default/Local\ Storage/chrome-extension_gkojfkhlekighikafcpjkiklfbnlmeio_0.localstorage "UPDATE ItemTable SET value=replace(value,'ca','${usersCountry[$((i-1))]}') WHERE key='be_rules';"
 
 url="${links[RANDOM % linksLength]}"
 echo "URL = $url"
 chromium-browser --user-data-dir="$BASEDIR/user$i/" --display=:2.1 "$url" > /dev/null & disown
 sleep 20
 done
-
