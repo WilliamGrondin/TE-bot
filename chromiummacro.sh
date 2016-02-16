@@ -16,9 +16,14 @@ for line in "${links[@]}";
 do printf '%s\n' "$line";
 done
 
+#get country
+
+readarray -t usersCountry < "$BASEDIR/countries"
+
 #kill old process
 killall -9 chromium-browser
 killall -9 Xvfb
+killall -9 sleep
 
 sleep 2
 
@@ -30,10 +35,21 @@ sleep 2
 
 #start chromium
 
+rm -rf $BASEDIR/user*
+
 for i in `seq 1 $nbChromeUser`
 do
+
+#recreate user dir
+
+cp -r $BASEDIR/default-user $BASEDIR/user$i
+
+echo "User$i country : ${usersCountry[$((i-1))]}"
+sqlite3 $BASEDIR/user$i/Default/Local\ Storage/chrome-extension_gkojfkhlekighikafcpjkiklfbnlmeio_0.localstorage "UPDATE ItemTable SET value=replace(v$
+
 url="${links[RANDOM % linksLength]}"
 echo "URL = $url"
-chromium-browser --user-data-dir=/root/chromium-user/user$i/ --display=:2.1 $url > /dev/null &
-sleep 10
+chromium-browser --user-data-dir="$BASEDIR/user$i/" --display=:2.1 "$url" > /dev/null & disown
+sleep 20
 done
+
