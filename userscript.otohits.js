@@ -11,22 +11,33 @@
 // @require    https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant       GM_addStyle
 // ==/UserScript==
-waitForKeyElements ("body > div:nth-child(2) > div > div > div:nth-child(2) > h1", home);
+
+$(document).ready(function () {
+
+    if (window.location.pathname=="/")
+        home();
+    if (window.location.pathname=="/account/login")
+        login();
+    if (window.location.pathname=="/account/dashboard")
+        autosurf();
+    
+});
+
+
 function home () {
 setTimeout(function () {
 window.location.replace("http://www.otohits.net/account/login");
     }, 20000);
 }
-waitForKeyElements ("body > div.content > div > div > div:nth-child(3) > div.span6 > form > div.form-actions.Ali
-gnCenter > input", login);
+
 function login () {
     setTimeout(function () {
-$("input[name=Email]").val("your_email");
-$("input[name=Password]").val("your_password");
+$("input[name=Email]").val("user-email");
+$("input[name=Password]").val("user-password");
 $("input[type=submit]").click();
     }, 100);
 }
-waitForKeyElements ("body > div.content > div.header > h1", autosurf);
+
 function autosurf () {
     setTimeout(function () {
 var el = $( "body > div.content > div.header > h1" ).text();
