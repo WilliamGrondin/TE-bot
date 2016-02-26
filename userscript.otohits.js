@@ -21,8 +21,8 @@ waitForKeyElements ("body > div.content > div > div > div:nth-child(3) > div.spa
 gnCenter > input", login);
 function login () {
     setTimeout(function () {
-$("input[name=Email]").val("william.grondin@gmail.com");
-$("input[name=Password]").val("drgsqm974");
+$("input[name=Email]").val("your_email");
+$("input[name=Password]").val("your_password");
 $("input[type=submit]").click();
     }, 100);
 }
